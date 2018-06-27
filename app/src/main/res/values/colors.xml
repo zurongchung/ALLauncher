@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/p50</color>
+    <color name="colorPrimaryDark">@color/p80</color>
+    <color name="colorAccent">@color/g50</color>
+
+    <!-- Purple -->
+    <color name="p5">#f3e5f5</color>
+    <color name="p10">#e1bee7</color>
+    <color name="p20">#ce93d8</color>
+    <color name="p30">#ba68c8</color>
+    <color name="p40">#ab47bc</color>
+    <color name="p50">#9c27b0</color>
+    <color name="p60">#8e24aa</color>
+    <color name="p70">#7b1fa2</color>
+    <color name="p80">#6a1b9a</color>
+    <color name="p90">#4a148c</color>
+
+    <!-- Purple -->
+    <color name="pink20_vib">#ff4081</color>
+    <color name="pink40_vib">#f50057</color>
+    <color name="pink40">#ec407a</color>
+    <color name="pink50">#e91e63</color>
+    <color name="pink60">#d81b60</color>
+    <color name="pink70">#c2185b</color>
+
+    <!-- Purple -->
+    <color name="g30">#81c784</color>
+    <color name="g40">#66bb6a</color>
+    <color name="g50">#4caf50</color>
+    <color name="g60">#43a047</color>
+    <color name="g70">#388e3c</color>
 </resources>
