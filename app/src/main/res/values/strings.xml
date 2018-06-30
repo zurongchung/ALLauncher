@@ -4,5 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_home_fragment">this is Home screen</string>
+    <string name="pre_defined_widget_fragment">pre defined widgets screen</string>
+    <string name="user_customize_widget_fragment">user customize widgets screen</string>
+
 </resources>

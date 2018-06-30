@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/home_quick"
+    android:id="@+id/home_control_but">
+
+</android.support.design.widget.FloatingActionButton>
