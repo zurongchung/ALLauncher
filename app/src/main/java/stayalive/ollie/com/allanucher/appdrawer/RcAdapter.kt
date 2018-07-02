@@ -1,5 +1,8 @@
 package stayalive.ollie.com.allanucher.appdrawer
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,8 +45,9 @@ class RcAdapter(private val dataSource: MutableList<AppInfo>) :
             v.setOnClickListener(this)
         }
         override fun onClick(v: View?) {
-            // launcher app in here
-            Log.d(logTag, "[ rc view clicked ]")
+            val ctx: Context = v?.context!!
+            val i: Intent = ctx.packageManager.getLaunchIntentForPackage(info.appPkgName)
+            ctx.startActivity(i)
         }
         fun bindViewWithData(appInfo: AppInfo) {
             info = appInfo
