@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_home.*
 
 import stayalive.ollie.com.allanucher.R
 
@@ -40,15 +41,36 @@ class HomeFragment : BaseFragment() {
             val c = LayoutInflater.from(context).inflate(R.layout.home_central_button, null)
             // need to resolve layout params in order to properly position it
             p.addView(c)
-            val floatBut = p.findViewById<FloatingActionButton>(R.id.home_control_but)
-            floatBut?.let {
-                it.setOnClickListener {
-                    Log.i(logTag, " Floating button has been pressed. working")
-                }
-            }
             Log.v(logTag, "control button successfully attached.")
         }
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val floatBut =
+            frag_home_contents_container.findViewById<FloatingActionButton>(R.id.home_control_but)
+        floatBut?.let {
+            it.setOnClickListener {
+                Log.i(logTag, " Floating button has been pressed. working")
+                /**
+                 *  Fragments never talk to each other directly
+                 *  open app drawer
+                 *  needed to talk to activity
+                 *  let activity to open drawer
+                 */
+                activity?.supportFragmentManager.apply {
+                    this!!.beginTransaction()
+                        .replace(R.id.appDrawerContainer,
+                            AppDrawerFragment.newInstance("appDrawer replace"),
+                            "App drawer fragment")
+                        .addToBackStack(null)
+                        .commit()
+                }
+
+            }
+        }
+        Log.v(logTag, "ON ACTIVITY CREATED")
     }
 
     override fun onPause() {
