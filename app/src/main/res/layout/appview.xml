@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/single_app_info_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/single_app_info_container">
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:padding="@dimen/drawer_bound_padding">
+
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/home_quick"
-        android:contentDescription="@string/icon_wrapper_desc"/>
+        android:layout_width="@dimen/drawer_app_size"
+        android:layout_height="@dimen/drawer_app_size"
+        android:contentDescription="@string/icon_wrapper_desc"
+        android:src="@drawable/home_quick" />
+
     <TextView
         android:id="@+id/app_label"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/drawer_icon_margin"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="@dimen/drawer_app_label_size" />
 
 </LinearLayout>

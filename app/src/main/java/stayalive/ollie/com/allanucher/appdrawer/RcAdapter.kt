@@ -2,17 +2,12 @@ package stayalive.ollie.com.allanucher.appdrawer
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.appview.view.*
 import stayalive.ollie.com.allanucher.R
-
-const val logTag = "Rc adapter"
-
 
 class RcAdapter(private val dataSource: MutableList<AppInfo>) :
     RecyclerView.Adapter<RcAdapter.AppViewHolder>()

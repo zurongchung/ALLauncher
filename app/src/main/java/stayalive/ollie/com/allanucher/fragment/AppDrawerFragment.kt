@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_app_drawer.*
 import stayalive.ollie.com.allanucher.R
 import stayalive.ollie.com.allanucher.appdrawer.AppInfo
 import stayalive.ollie.com.allanucher.appdrawer.RcAdapter
+import stayalive.ollie.com.allanucher.helper.AutoFitGridLayoutManager
 
 private const val ARG_PARAM = "param"
 
@@ -48,8 +49,6 @@ class AppDrawerFragment : Fragment() {
             app = AppInfo(icon, label, pkgName)
             appInfoList.add(app)
         }
-
-
     }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -71,7 +70,7 @@ class AppDrawerFragment : Fragment() {
     ): View? {
         Log.v(logTag, "[ ON CREATE VIEW ]")
         val view =  inflater.inflate(getLayout(), container, false)
-        viewManager = GridLayoutManager(context, 4)
+        viewManager = GridLayoutManager(context, drawer_col)
         viewAdapter = RcAdapter(appInfoList)
         appDrawerContainer = view.findViewById<RecyclerView>(R.id.app_drawer_view_recycle).apply {
             setHasFixedSize(true)
@@ -92,6 +91,8 @@ class AppDrawerFragment : Fragment() {
     }
 
     companion object {
+        // changeable by user setting a new value
+        var drawer_col: Int = 5
         @JvmStatic
         fun newInstance(param: String) =
                 AppDrawerFragment().apply {
