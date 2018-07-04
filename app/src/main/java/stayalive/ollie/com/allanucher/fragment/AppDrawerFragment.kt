@@ -60,9 +60,9 @@ class AppDrawerFragment : Fragment() {
         arguments?.let {
             param = it.getString(ARG_PARAM)
         }
+
         Log.v(logTag, "[ ON CREATE ]")
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,6 +70,7 @@ class AppDrawerFragment : Fragment() {
     ): View? {
         Log.v(logTag, "[ ON CREATE VIEW ]")
         val view =  inflater.inflate(getLayout(), container, false)
+
         viewManager = GridLayoutManager(context, drawer_col)
         viewAdapter = RcAdapter(appInfoList)
         appDrawerContainer = view.findViewById<RecyclerView>(R.id.app_drawer_view_recycle).apply {

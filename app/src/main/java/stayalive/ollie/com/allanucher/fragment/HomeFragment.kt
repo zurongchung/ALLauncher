@@ -3,6 +3,7 @@ package stayalive.ollie.com.allanucher.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,10 +38,20 @@ class HomeFragment : BaseFragment() {
         val view = inflater.inflate(getLayout(), container, false)
         Log.i(logTag, "the position get from pager is: $param1")
         if (param1 == 1) {
+            val parentID = R.id.frag_home_contents_container
+            val floatID = R.id.home_control_but
             val p = view.findViewById<ConstraintLayout>(R.id.frag_home_contents_container)
             val c = LayoutInflater.from(context).inflate(R.layout.home_central_button, null)
-            // need to resolve layout params in order to properly position it
             p.addView(c)
+
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(p)
+            constraintSet.apply {
+                connect(floatID, ConstraintSet.END, parentID, ConstraintSet.END, 0)
+                connect(floatID, ConstraintSet.START, parentID, ConstraintSet.START, 0)
+                connect(floatID, ConstraintSet.BOTTOM, parentID, ConstraintSet.BOTTOM, 20)
+                applyTo(p)
+            }
             Log.v(logTag, "control button successfully attached.")
         }
         return view
