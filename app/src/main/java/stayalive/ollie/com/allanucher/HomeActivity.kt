@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.util.Log
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_home.*
 import stayalive.ollie.com.allanucher.activity.BaseActivity
 import stayalive.ollie.com.allanucher.fragment.HomeFragment
@@ -16,8 +17,16 @@ class HomeActivity : BaseActivity() {
         return R.layout.activity_home
     }
 
+    private fun getTransStatusBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getTransStatusBar()
         setContentView(getLayout())
         viewPager.adapter = HomePagerAdapter(supportFragmentManager)
         // may cause problems

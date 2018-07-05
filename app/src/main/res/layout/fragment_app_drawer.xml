@@ -8,4 +8,4 @@
     android:paddingLeft="@dimen/drawer_bound_padding"
     android:paddingRight="@dimen/drawer_bound_padding"
     app:spanCount="6"
-    android:theme="@style/Theme_AL_Drawer" />
+    android:theme="@style/Theme_AL_Drawer"/>

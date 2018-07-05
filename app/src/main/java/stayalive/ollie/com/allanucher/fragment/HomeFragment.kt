@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment() {
         if (param1 == 1) {
             val parentID = R.id.frag_home_contents_container
             val floatID = R.id.home_control_but
-            val p = view.findViewById<ConstraintLayout>(R.id.frag_home_contents_container)
+            val p = view.findViewById<ConstraintLayout>(parentID)
             val c = LayoutInflater.from(context).inflate(R.layout.home_central_button, null)
             p.addView(c)
 
