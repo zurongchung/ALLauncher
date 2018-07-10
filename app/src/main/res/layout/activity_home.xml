@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".HomeActivity">
 
+    <!--
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -16,4 +17,6 @@
         android:id="@+id/appDrawerContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+        -->
+    <include layout="@layout/home_central_button"/>
 </android.support.constraint.ConstraintLayout>

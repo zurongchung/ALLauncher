@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/p50</color>
-    <color name="colorPrimaryDark">@color/p80</color>
+    <color name="colorPrimary">@color/p5</color>
+    <color name="colorPrimaryDark">@color/p10</color>
     <color name="colorAccent">@color/g50</color>
 
     <!-- Purple -->

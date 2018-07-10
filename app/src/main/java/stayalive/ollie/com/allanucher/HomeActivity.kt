@@ -1,5 +1,6 @@
 package stayalive.ollie.com.allanucher
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -9,7 +10,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.home_central_button.*
 import stayalive.ollie.com.allanucher.activity.BaseActivity
+import stayalive.ollie.com.allanucher.activity.DrawerActivity
 import stayalive.ollie.com.allanucher.fragment.HomeFragment
 
 class HomeActivity : BaseActivity() {
@@ -33,13 +36,26 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         //getTransStatusBar()
         setContentView(getLayout())
+        touchFloatButtonOpenDrawer()
+        /**
         viewPager.apply {
             adapter = HomePagerAdapter(supportFragmentManager)
             // may cause problems
             currentItem = 1
         }
+        **/
 
         Log.v(logTag, "[ ON CREATE ]")
+    }
+
+    private fun touchFloatButtonOpenDrawer() {
+        val i = Intent(this, DrawerActivity::class.java)
+        home_control_but.let {
+            it.setOnClickListener {
+                Log.i(logTag, " Floating button has been pressed. working")
+                startActivity(i)
+            }
+        }
     }
 
     fun handleTouchEvent(v: View, event: MotionEvent?): Boolean {
@@ -70,6 +86,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+    /** used with pager
     private class HomePagerAdapter(manager: FragmentManager
     ) : FragmentStatePagerAdapter(manager) {
 
@@ -82,4 +99,5 @@ class HomeActivity : BaseActivity() {
             return 3
         }
     }
+    **/
 }
