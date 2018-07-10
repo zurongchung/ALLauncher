@@ -1,7 +1,5 @@
 package stayalive.ollie.com.allanucher.appdrawer
 
-import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,28 +7,29 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.appview.view.*
 import stayalive.ollie.com.allanucher.R
 
-class RcAdapter(private val dataSource: MutableList<AppInfo>) :
+class RcAdapter(private val appManager: AppManager) :
     RecyclerView.Adapter<RcAdapter.AppViewHolder>()
 {
+    private val mSource = appManager.getLaunchableApps().sortedBy { it.appLabel }
+    var itemLongClickListener: (AppInfo, View) -> Boolean = {_, _ -> false}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
-        val inflateView = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.appview, parent, false)
-        return AppViewHolder(inflateView)
+        return AppViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
-        var source: AppInfo
-        for (i in dataSource) {
-            source = dataSource[position]
-            holder.bindViewWithData(source)
+        mSource.forEach { _ ->
+            holder.bindViewWithData(mSource[position])
         }
 
     }
 
-    override fun getItemCount(): Int = dataSource.size
+    override fun getItemCount(): Int =  mSource.size
 
-    class AppViewHolder(v: View) :
+
+    inner class AppViewHolder(v: View) :
         RecyclerView.ViewHolder(v),
         View.OnClickListener
     {
@@ -38,11 +37,10 @@ class RcAdapter(private val dataSource: MutableList<AppInfo>) :
         private lateinit var info: AppInfo
         init {
             v.setOnClickListener(this)
+            v.setOnLongClickListener{ itemLongClickListener.invoke(info, v) }
         }
         override fun onClick(v: View?) {
-            val ctx: Context = v?.context!!
-            val i: Intent = ctx.packageManager.getLaunchIntentForPackage(info.appPkgName)
-            ctx.startActivity(i)
+            appManager.startApp(info)
         }
         fun bindViewWithData(appInfo: AppInfo) {
             info = appInfo

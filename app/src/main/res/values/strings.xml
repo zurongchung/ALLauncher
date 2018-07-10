@@ -8,5 +8,13 @@
     <string name="pre_defined_widget_fragment">pre defined widgets screen</string>
     <string name="user_customize_widget_fragment">user customize widgets screen</string>
     <string name="icon_wrapper_desc">new app icon</string>
+    <string name="default_shortcut_icon_desc">shortcut icon</string>
+    <string name="default_shortcut_texts">shortcut texts</string>
+
+    <!-- common shortcuts -->
+    <string name="label_uninstall">Uninstall</string>
+    <string name="label_edit">Edit</string>
+    <string name="label_app_info">AppInfo</string>
+    <string name="label_widget">Widget</string>
 
 </resources>

@@ -6,9 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.support.design.widget.FloatingActionButton
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 import stayalive.ollie.com.allanucher.R
@@ -47,14 +45,25 @@ class HomeFragment : BaseFragment() {
             val constraintSet = ConstraintSet()
             constraintSet.clone(p)
             constraintSet.apply {
-                connect(floatID, ConstraintSet.END, parentID, ConstraintSet.END, 0)
-                connect(floatID, ConstraintSet.START, parentID, ConstraintSet.START, 0)
-                connect(floatID, ConstraintSet.BOTTOM, parentID, ConstraintSet.BOTTOM, 20)
+                connect(floatID, ConstraintSet.END, parentID, ConstraintSet.END, 40)
+                //connect(floatID, ConstraintSet.START, parentID, ConstraintSet.START, 40)
+                connect(floatID, ConstraintSet.BOTTOM, parentID, ConstraintSet.BOTTOM, 40)
                 applyTo(p)
             }
             Log.v(logTag, "control button successfully attached.")
         }
         return view
+    }
+
+    private fun openDrawer() {
+        activity?.supportFragmentManager.apply {
+            this!!.beginTransaction()
+                .replace(R.id.appDrawerContainer,
+                    AppDrawerFragment.newInstance("appDrawer replace"),
+                    "App drawer fragment")
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -64,21 +73,7 @@ class HomeFragment : BaseFragment() {
         floatBut?.let {
             it.setOnClickListener {
                 Log.i(logTag, " Floating button has been pressed. working")
-                /**
-                 *  Fragments never talk to each other directly
-                 *  open app drawer
-                 *  needed to talk to activity
-                 *  let activity to open drawer
-                 */
-                activity?.supportFragmentManager.apply {
-                    this!!.beginTransaction()
-                        .replace(R.id.appDrawerContainer,
-                            AppDrawerFragment.newInstance("appDrawer replace"),
-                            "App drawer fragment")
-                        .addToBackStack(null)
-                        .commit()
-                }
-
+                openDrawer()
             }
         }
         Log.v(logTag, "ON ACTIVITY CREATED")

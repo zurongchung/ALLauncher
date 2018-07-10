@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_home.*
 import stayalive.ollie.com.allanucher.activity.BaseActivity
@@ -18,20 +20,54 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun getTransStatusBar() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+        window.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+            )
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getTransStatusBar()
+        //getTransStatusBar()
         setContentView(getLayout())
-        viewPager.adapter = HomePagerAdapter(supportFragmentManager)
-        // may cause problems
-        viewPager.currentItem = 1
+        viewPager.apply {
+            adapter = HomePagerAdapter(supportFragmentManager)
+            // may cause problems
+            currentItem = 1
+        }
+
         Log.v(logTag, "[ ON CREATE ]")
+    }
+
+    fun handleTouchEvent(v: View, event: MotionEvent?): Boolean {
+        val actionCode: Int? = event?.actionMasked
+        Log.d(logTag, "action: [ $actionCode ], maskAction: [ ${event?.actionMasked} ]")
+        when (actionCode) {
+            MotionEvent.ACTION_DOWN -> {
+                Log.d(logTag, "action: DOWN")
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                Log.d(logTag, "action: MOVE")
+                return true
+            }
+            MotionEvent.ACTION_UP -> {
+                Log.d(logTag, "action: UP")
+                return true
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                Log.d(logTag, "action: CANCEL")
+                return true
+            }
+            MotionEvent.ACTION_OUTSIDE -> {
+                Log.d(logTag, "action: OUTSIDE")
+                return true
+            }
+            else -> return false
+        }
     }
 
     private class HomePagerAdapter(manager: FragmentManager

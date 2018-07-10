@@ -10,16 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme_transparent">
         <activity
-            android:launchMode="singleTask"
             android:name=".HomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.DrawerActivity"/>
     </application>
 
 </manifest>

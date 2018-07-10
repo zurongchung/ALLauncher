@@ -5,18 +5,29 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Layout
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.PopupWindow
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_app_drawer.*
 import stayalive.ollie.com.allanucher.R
 import stayalive.ollie.com.allanucher.appdrawer.AppInfo
+import stayalive.ollie.com.allanucher.appdrawer.AppManager
 import stayalive.ollie.com.allanucher.appdrawer.RcAdapter
+import stayalive.ollie.com.allanucher.appdrawer.Shortcut
+import stayalive.ollie.com.allanucher.appdrawer.shortcut.ShortcutListAdapter
 import stayalive.ollie.com.allanucher.helper.AutoFitGridLayoutManager
 
 private const val ARG_PARAM = "param"
@@ -26,33 +37,14 @@ class AppDrawerFragment : Fragment() {
     private var param: String? = null
     private fun getLayout() = R.layout.fragment_app_drawer
     private lateinit var appDrawerContainer: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var appInfoList: MutableList<AppInfo>
-    private lateinit var pm: PackageManager
+    private lateinit var appManager: AppManager
+    private lateinit var shortcutPopContainer: RecyclerView
+    private var shortcutPopup: PopupWindow? = null
 
-    private fun loadApps() {
-        val availableActivities: MutableList<ResolveInfo>
-        var app: AppInfo
-        var icon: Drawable
-        var label: CharSequence
-        var pkgName: String
-        appInfoList = mutableListOf()
-        pm = activity?.packageManager!!
-        val i = Intent(Intent.ACTION_MAIN, null)
-        i.addCategory(Intent.CATEGORY_LAUNCHER)
-        availableActivities = pm.queryIntentActivities(i, 0)
-        for (ri in availableActivities) {
-            icon = ri.activityInfo.loadIcon(pm)
-            pkgName = ri.activityInfo.packageName
-            label = ri.loadLabel(pm)
-            app = AppInfo(icon, label, pkgName)
-            appInfoList.add(app)
-        }
-    }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        loadApps()
+        appManager = AppManager(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,11 +64,57 @@ class AppDrawerFragment : Fragment() {
         val view =  inflater.inflate(getLayout(), container, false)
 
         viewManager = GridLayoutManager(context, drawer_col)
-        viewAdapter = RcAdapter(appInfoList)
+        val viewAdapter = RcAdapter(appManager)
+        viewAdapter.itemLongClickListener = {appInfo, itemView ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                showPopup(appInfo, itemView)
+            }
+            /**
+             * @return true
+             * @OnClick will invoke if return false
+             */
+            true
+        }
         appDrawerContainer = view.findViewById<RecyclerView>(R.id.app_drawer_view_recycle).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+        return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    private fun showPopup(app: AppInfo, itemView: View): Boolean {
+        val shortcuts = appManager.getShortcutFromApp(app.appPkgName)
+        if (shortcuts.isNotEmpty()) {
+            val contentView = createShortcutListView(shortcuts)
+            val location = IntArray(2){0}
+            itemView.getLocationOnScreen(location)
+            shortcutPopup?.dismiss()
+            shortcutPopup = PopupWindow(contentView, WRAP_CONTENT, WRAP_CONTENT, true)
+            shortcutPopup?.apply {
+                animationStyle = R.style.Animation_AppCompat_Dialog
+                showAtLocation(itemView, Gravity.NO_GRAVITY,
+                    location[0] + itemView.width / 2,
+                    location[1] + itemView.height / 2)
+            }
+        } else {
+            Toast.makeText(
+                context,
+                "This app has no shortcuts or you are not a launcher",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        return true
+    }
+
+    private fun createShortcutListView(shortcuts: List<Shortcut>): View {
+        val view = LayoutInflater.from(context).inflate(R.layout.shortcut_popup_container, null)
+        shortcutPopContainer = view.findViewById(R.id.shortcutPopupRoot)
+        shortcutPopContainer.apply {
+            setHasFixedSize(true)
+            adapter = ShortcutListAdapter(shortcuts, appManager)
+            layoutManager = LinearLayoutManager(context)
         }
         return view
     }

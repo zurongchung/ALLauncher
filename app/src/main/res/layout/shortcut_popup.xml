@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/shortcut_pop_width"
+    android:layout_height="@dimen/shortcut_pop_height"
+    android:orientation="horizontal"
+    android:id="@+id/shortcut_row"
+    android:background="@drawable/round_popup_bg_light"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="@dimen/global_small_gap"
+    android:paddingStart="@dimen/global_bound"
+    android:paddingEnd="@dimen/global_bound"
+    android:weightSum="1">
+    <ImageView
+        android:id="@+id/shortcut_icon"
+        android:layout_width="@dimen/default_shortcut_icon_size"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/global_small_gap"
+        android:layout_weight="0.4"
+        android:src="@drawable/ic_home_black_24dp"
+        android:contentDescription="@string/default_shortcut_icon_desc"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="0.6"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@android:color/darker_gray"
+        android:text="@string/default_shortcut_texts"
+        android:id="@+id/shortcut_label"/>
+</LinearLayout>
