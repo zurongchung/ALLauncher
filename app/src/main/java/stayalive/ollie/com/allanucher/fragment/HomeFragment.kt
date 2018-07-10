@@ -1,6 +1,7 @@
 package stayalive.ollie.com.allanucher.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
@@ -10,6 +11,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 import stayalive.ollie.com.allanucher.R
+import stayalive.ollie.com.allanucher.activity.DrawerActivity
 
 private const val ARG_PARAM1 = "param1"
 
@@ -56,6 +58,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openDrawer() {
+        val i = Intent(context, DrawerActivity::class.java)
+        activity?.startActivity(i)
+        /** old drawer using fragment
         activity?.supportFragmentManager.apply {
             this!!.beginTransaction()
                 .replace(R.id.appDrawerContainer,
@@ -64,6 +69,7 @@ class HomeFragment : BaseFragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        **/
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -1,10 +1,6 @@
-package stayalive.ollie.com.allanucher.fragment
+package stayalive.ollie.com.allanucher.fragment.deprecated
 
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -12,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,14 +16,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_app_drawer.*
 import stayalive.ollie.com.allanucher.R
 import stayalive.ollie.com.allanucher.appdrawer.AppInfo
 import stayalive.ollie.com.allanucher.appdrawer.AppManager
 import stayalive.ollie.com.allanucher.appdrawer.RcAdapter
 import stayalive.ollie.com.allanucher.appdrawer.Shortcut
 import stayalive.ollie.com.allanucher.appdrawer.shortcut.ShortcutListAdapter
-import stayalive.ollie.com.allanucher.helper.AutoFitGridLayoutManager
 
 private const val ARG_PARAM = "param"
 
@@ -63,7 +56,9 @@ class AppDrawerFragment : Fragment() {
         Log.v(logTag, "[ ON CREATE VIEW ]")
         val view =  inflater.inflate(getLayout(), container, false)
 
-        viewManager = GridLayoutManager(context, drawer_col)
+        viewManager = GridLayoutManager(context,
+            drawer_col
+        )
         val viewAdapter = RcAdapter(appManager)
         viewAdapter.itemLongClickListener = {appInfo, itemView ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {

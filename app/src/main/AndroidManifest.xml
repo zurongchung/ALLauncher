@@ -8,11 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme_transparent">
+        android:theme="@style/ThemeShowWallpaper">
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/ThemeHomeScreenFullTransparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DrawerActivity"/>
+        <activity
+            android:theme="@style/ThemeALDrawer"
+            android:name=".activity.DrawerActivity"
+            android:parentActivityName=".HomeActivity"
+            />
     </application>
 
 </manifest>

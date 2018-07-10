@@ -8,14 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
-    <style name="Theme_transparent" parent="AppTheme">
+    <style name="ThemeShowWallpaper" parent="AppTheme">
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+
+    </style>
+    <style name="ThemeHomeScreenFullTransparent" parent="ThemeShowWallpaper">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
-    <style name="Theme_AL_Drawer" parent="AppTheme">
-        <item name="android:background">@color/p80t</item>
+    <style name="ThemeALDrawer" parent="AppTheme">
+        <item name="android:background">#ccffffff</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>
