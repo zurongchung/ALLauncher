@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Process
 import android.support.annotation.RequiresApi
 import android.util.Log
+import stayalive.ollie.com.allanucher.shortcuts.Shortcut
 
 typealias ShortcutQuery = LauncherApps.ShortcutQuery
 
@@ -17,10 +18,22 @@ class AppManager(private val context: Context?) {
     private val packageManager = context?.packageManager!!
     private val launcherApps: LauncherApps
         get() = context?.getSystemService((Context.LAUNCHER_APPS_SERVICE)) as LauncherApps
-
+    private fun createLauncherIntent(): Intent {
+        return Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER)
+    }
+    fun getAppPackageName(): List<String> {
+        val i = createLauncherIntent()
+        return packageManager.queryIntentActivities(i, 0)
+            .map {
+                it.activityInfo
+            }
+            .map {
+                it.packageName
+            }
+    }
     fun getLaunchableApps(): List<AppInfo> {
-        val i = Intent(Intent.ACTION_MAIN, null)
-        i.addCategory(Intent.CATEGORY_LAUNCHER)
+        Log.d(logTag, "get installed apps")
+        val i = createLauncherIntent()
         return packageManager.queryIntentActivities(i, 0)
             .map{
                 it.activityInfo
@@ -55,7 +68,12 @@ class AppManager(private val context: Context?) {
         return try {
             launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
                 .map {
-                    Shortcut(it.id, it.shortLabel.toString(), it.`package`, loadShortcutIcon(it))
+                    Shortcut(
+                        it.id,
+                        it.shortLabel.toString(),
+                        it.`package`,
+                        loadShortcutIcon(it)
+                    )
                 }
         } catch (e: SecurityException) {
             emptyList()

@@ -25,6 +25,7 @@
         <activity
             android:theme="@style/ThemeALDrawer"
             android:name=".activity.DrawerActivity"
+            android:launchMode="singleTask"
             android:parentActivityName=".HomeActivity"
             />
     </application>

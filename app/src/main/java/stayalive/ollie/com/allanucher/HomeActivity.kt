@@ -1,19 +1,20 @@
 package stayalive.ollie.com.allanucher
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.home_central_button.*
 import stayalive.ollie.com.allanucher.activity.BaseActivity
 import stayalive.ollie.com.allanucher.activity.DrawerActivity
-import stayalive.ollie.com.allanucher.fragment.HomeFragment
+import stayalive.ollie.com.allanucher.appdrawer.AppInfo
+import stayalive.ollie.com.allanucher.appdrawer.AppManager
+import stayalive.ollie.com.allanucher.shortcuts.ShortcutPop
+import stayalive.ollie.com.allanucher.viewModel.InstalledAppViewModel
 
 class HomeActivity : BaseActivity() {
     override val logTag: String
@@ -21,23 +22,14 @@ class HomeActivity : BaseActivity() {
     private fun getLayout(): Int {
         return R.layout.activity_home
     }
-
-    private fun getTransStatusBar() {
-        window.apply {
-            setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-                WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
-            )
-        }
-
-    }
-
+    private lateinit var appManager: AppManager
+    private lateinit var mAppsModel: InstalledAppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getTransStatusBar()
         setContentView(getLayout())
-        touchFloatButtonOpenDrawer()
+        init()
         /**
         viewPager.apply {
             adapter = HomePagerAdapter(supportFragmentManager)
@@ -49,6 +41,16 @@ class HomeActivity : BaseActivity() {
         Log.v(logTag, "[ ON CREATE ]")
     }
 
+    private fun init() {
+        appManager = AppManager(this)
+        touchFloatButtonOpenDrawer()
+        mAppsModel = ViewModelProviders.of(this).get(InstalledAppViewModel::class.java)
+        val vmObserver: Observer<List<AppInfo>> = Observer {
+            initDock(it)
+        }
+        mAppsModel.getApps(this).observe(this, vmObserver)
+    }
+
     private fun touchFloatButtonOpenDrawer() {
         val i = Intent(this, DrawerActivity::class.java)
         home_control_but.let {
@@ -57,6 +59,43 @@ class HomeActivity : BaseActivity() {
                 startActivity(i)
             }
         }
+    }
+
+    private fun initDock(apps: List<AppInfo>?) {
+        val dockApps = findDockApps(apps)
+        dockApps?.let {
+            for ((index, app) in it.withIndex()) {
+                dock_container.getChildAt(index).apply {
+                    background = app.appIcon
+                    contentDescription = app.appLabel
+                    setOnClickListener {
+                        startActivity(packageManager.getLaunchIntentForPackage(app.appPkgName))
+                    }
+                    setOnLongClickListener {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                            ShortcutPop.showPopup(context, appManager, app, it)
+                        }
+                        true
+                    }
+                }
+                Log.d(logTag, "found: [ $index, ${app.appPkgName} ]")
+            }
+        }
+    }
+
+    private fun findDockApps(apps: List<AppInfo>?): List<AppInfo>? {
+        val dialerRegx = Regex("""\.dialer$""")
+        val mmsRegx = Regex("""\.mms$""")
+        val cameraRegx = Regex("""\.camera$""")
+        val browserRegx = Regex("""\.browser$""")
+        val matchedApps: List<AppInfo>?
+        matchedApps = apps?.filter {
+            dialerRegx.containsMatchIn(it.appPkgName) or
+                    mmsRegx.containsMatchIn(it.appPkgName) or
+                    cameraRegx.containsMatchIn(it.appPkgName) or
+                    browserRegx.containsMatchIn(it.appPkgName)
+        }
+        return matchedApps
     }
 
     fun handleTouchEvent(v: View, event: MotionEvent?): Boolean {
@@ -86,6 +125,7 @@ class HomeActivity : BaseActivity() {
             else -> return false
         }
     }
+
 
     /** used with pager
     private class HomePagerAdapter(manager: FragmentManager

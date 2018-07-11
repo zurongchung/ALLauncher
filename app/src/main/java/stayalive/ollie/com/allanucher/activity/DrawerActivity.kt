@@ -1,25 +1,19 @@
 package stayalive.ollie.com.allanucher.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.PopupWindow
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_app_drawer.*
 import stayalive.ollie.com.allanucher.R
 import stayalive.ollie.com.allanucher.appdrawer.AppInfo
 import stayalive.ollie.com.allanucher.appdrawer.AppManager
 import stayalive.ollie.com.allanucher.appdrawer.RcAdapter
-import stayalive.ollie.com.allanucher.appdrawer.Shortcut
-import stayalive.ollie.com.allanucher.appdrawer.shortcut.ShortcutListAdapter
+import stayalive.ollie.com.allanucher.shortcuts.ShortcutPop
+import stayalive.ollie.com.allanucher.viewModel.InstalledAppViewModel
 
 class DrawerActivity : BaseActivity() {
     override val logTag = "DrawerActivity"
@@ -28,23 +22,30 @@ class DrawerActivity : BaseActivity() {
     }
     private lateinit var appManager: AppManager
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var shortcutPopup: PopupWindow? = null
-    private lateinit var shortcutPopContainer: RecyclerView
+    private lateinit var mAppsModel: InstalledAppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
         appManager = AppManager(this)
-        createAppsLayout()
+        //createAppsLayout()
+        init()
         //val height = getStatusBarHeight()
         Log.v(logTag, "[ ON CREATE ]")
     }
-    private fun createAppsLayout() {
+    private fun init() {
+        mAppsModel = ViewModelProviders.of(this).get(InstalledAppViewModel::class.java)
+        val vmObserver: Observer<List<AppInfo>> = Observer {
+            createAppsLayout(it)
+        }
+        mAppsModel.getApps(this).observe(this, vmObserver)
+    }
+    private fun createAppsLayout(apps: List<AppInfo>?) {
         viewManager = GridLayoutManager(this, drawer_col)
-        val viewAdapter = RcAdapter(appManager)
+        val viewAdapter = RcAdapter(apps, appManager)
         viewAdapter.itemLongClickListener = {appInfo, itemView ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                showPopup(appInfo, itemView)
+                ShortcutPop.showPopup(this, appManager, appInfo, itemView)
             }
             /**
              * @return true
@@ -59,11 +60,12 @@ class DrawerActivity : BaseActivity() {
         }
     }
 
+    /**
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     private fun showPopup(app: AppInfo, itemView: View): Boolean {
         val shortcuts = appManager.getShortcutFromApp(app.appPkgName)
         if (shortcuts.isNotEmpty()) {
-            val contentView = createShortcutListView(shortcuts)
+            val contentView = ShortcutPop.createShortcutListView(this, appManager, shortcuts)
             val location = IntArray(2){0}
             itemView.getLocationOnScreen(location)
             shortcutPopup?.dismiss()
@@ -94,6 +96,7 @@ class DrawerActivity : BaseActivity() {
         }
         return view
     }
+    **/
     fun getStatusBarHeight(): Int {
         var result = 0
         val resId: Int = resources.getIdentifier("status_bar_height", "dimen", "android")

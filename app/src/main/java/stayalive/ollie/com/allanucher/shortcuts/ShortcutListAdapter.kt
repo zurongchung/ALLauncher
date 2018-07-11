@@ -1,4 +1,4 @@
-package stayalive.ollie.com.allanucher.appdrawer.shortcut
+package stayalive.ollie.com.allanucher.shortcuts
 
 import android.os.Build
 import android.support.annotation.RequiresApi
@@ -6,11 +6,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.shortcut_popup.view.*
 import stayalive.ollie.com.allanucher.R
 import stayalive.ollie.com.allanucher.appdrawer.AppManager
-import stayalive.ollie.com.allanucher.appdrawer.Shortcut
 
 class ShortcutListAdapter(
     private val shortcuts: List<Shortcut>,

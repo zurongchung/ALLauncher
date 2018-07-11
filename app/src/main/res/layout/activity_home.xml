@@ -18,5 +18,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
         -->
-    <include layout="@layout/home_central_button"/>
+
+    <LinearLayout
+        android:id="@+id/dock_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/home_control_but"
+        app:layout_constraintEnd_toEndOf="@+id/home_control_but"
+        app:layout_constraintStart_toStartOf="@+id/home_control_but">
+
+        <ImageView
+            android:id="@+id/dock_app_soa"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:layout_marginBottom="@dimen/global_bound"
+            android:layout_marginTop="@dimen/global_bound"
+            android:contentDescription="@string/label_app_info" />
+
+        <ImageView
+            android:id="@+id/dock_app_sob"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:layout_marginBottom="@dimen/global_bound"
+            android:layout_marginTop="@dimen/global_bound"
+            android:contentDescription="@string/label_app_info" />
+
+        <ImageView
+            android:id="@+id/dock_app_soc"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:layout_marginBottom="@dimen/global_bound"
+            android:layout_marginTop="@dimen/global_bound"
+            android:contentDescription="@string/label_app_info" />
+
+        <ImageView
+            android:id="@+id/dock_app_sod"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:layout_marginBottom="@dimen/global_bound"
+            android:layout_marginTop="@dimen/global_bound"
+            android:contentDescription="@string/label_app_info" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/home_control_but"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/home_quick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

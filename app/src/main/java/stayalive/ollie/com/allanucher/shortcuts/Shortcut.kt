@@ -1,4 +1,4 @@
-package stayalive.ollie.com.allanucher.appdrawer
+package stayalive.ollie.com.allanucher.shortcuts
 
 import android.graphics.drawable.Drawable
 
