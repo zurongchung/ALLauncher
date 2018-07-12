@@ -5,7 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.math.MathUtils
+import android.support.v4.view.GestureDetectorCompat
 import android.util.Log
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_home.*
@@ -15,8 +18,11 @@ import stayalive.ollie.com.allanucher.appdrawer.AppInfo
 import stayalive.ollie.com.allanucher.appdrawer.AppManager
 import stayalive.ollie.com.allanucher.shortcuts.ShortcutPop
 import stayalive.ollie.com.allanucher.viewModel.InstalledAppViewModel
+import kotlin.math.abs
 
-class HomeActivity : BaseActivity() {
+class HomeActivity :
+    BaseActivity()
+{
     override val logTag: String
         get() = "Home activity"
     private fun getLayout(): Int {
@@ -24,6 +30,7 @@ class HomeActivity : BaseActivity() {
     }
     private lateinit var appManager: AppManager
     private lateinit var mAppsModel: InstalledAppViewModel
+    private lateinit var mDetector: GestureDetectorCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,7 @@ class HomeActivity : BaseActivity() {
     private fun init() {
         appManager = AppManager(this)
         touchFloatButtonOpenDrawer()
+        mDetector = GestureDetectorCompat(this, GesturesOnHomeScreenListener())
         mAppsModel = ViewModelProviders.of(this).get(InstalledAppViewModel::class.java)
         val vmObserver: Observer<List<AppInfo>> = Observer {
             initDock(it)
@@ -52,13 +60,15 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun touchFloatButtonOpenDrawer() {
-        val i = Intent(this, DrawerActivity::class.java)
+        val i = getOpenDrawerIntent()
         home_control_but.let {
             it.setOnClickListener {
-                Log.i(logTag, " Floating button has been pressed. working")
                 startActivity(i)
             }
         }
+    }
+    fun getOpenDrawerIntent(): Intent {
+        return Intent(this, DrawerActivity::class.java)
     }
 
     private fun initDock(apps: List<AppInfo>?) {
@@ -127,6 +137,33 @@ class HomeActivity : BaseActivity() {
     }
 
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        mDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
+    }
+    inner class GesturesOnHomeScreenListener : GestureDetector.SimpleOnGestureListener() {
+        override fun onDown(e: MotionEvent?): Boolean {
+            return true
+        }
+
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            var deltaY = 0.0f
+            e1?.let {
+                e2?.let {
+                    deltaY = abs(e1.y - e2.y)
+                }
+            }
+            if (deltaY > 300) {
+                startActivity(getOpenDrawerIntent())
+            }
+            return true
+        }
+    }
     /** used with pager
     private class HomePagerAdapter(manager: FragmentManager
     ) : FragmentStatePagerAdapter(manager) {

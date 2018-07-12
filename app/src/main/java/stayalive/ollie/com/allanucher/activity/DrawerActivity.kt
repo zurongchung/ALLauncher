@@ -28,7 +28,6 @@ class DrawerActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
         appManager = AppManager(this)
-        //createAppsLayout()
         init()
         //val height = getStatusBarHeight()
         Log.v(logTag, "[ ON CREATE ]")

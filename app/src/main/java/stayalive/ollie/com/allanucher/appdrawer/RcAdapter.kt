@@ -43,7 +43,6 @@ class RcAdapter(
             v.setOnLongClickListener{ itemLongClickListener.invoke(info, v) }
         }
         override fun onClick(v: View?) {
-            Toast.makeText(v?.context, info.appPkgName, Toast.LENGTH_SHORT).show()
             appManager.startApp(info)
         }
         fun bindViewWithData(appInfo: AppInfo) {
