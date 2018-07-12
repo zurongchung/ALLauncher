@@ -155,7 +155,8 @@ class HomeActivity :
             var deltaY = 0.0f
             e1?.let {
                 e2?.let {
-                    deltaY = abs(e1.y - e2.y)
+                    // swipe up
+                    deltaY = e1.y - e2.y
                 }
             }
             if (deltaY > 300) {
