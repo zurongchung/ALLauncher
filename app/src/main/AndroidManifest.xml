@@ -22,12 +22,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:theme="@style/ThemeALDrawer"
-            android:name=".activity.DrawerActivity"
-            android:launchMode="singleTask"
-            android:parentActivityName=".HomeActivity"
-            />
     </application>
 
 </manifest>

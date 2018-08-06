@@ -3,6 +3,19 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="gap_sm">4dp</dimen>
+    <dimen name="gap_md">8dp</dimen>
+    <dimen name="outmost_indent">8dp</dimen>
+    <dimen name="inner_bound">16dp</dimen>
+
+    <dimen name="indicator">4dp</dimen>
+    <dimen name="cap_size">22dp</dimen>
+    <dimen name="icon_default">48dp</dimen>
+    <dimen name="icon_half">24dp</dimen>
+
+    <dimen name="text_sm">8sp</dimen>
+    <dimen name="text_md">14sp</dimen>
+
     <dimen name="global_small_gap">4dp</dimen>
     <dimen name="global_bound">10dp</dimen>
     <dimen name="drawer_bound_padding">10dp</dimen>

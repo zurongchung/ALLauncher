@@ -16,5 +16,10 @@
     <string name="label_edit">Edit</string>
     <string name="label_app_info">AppInfo</string>
     <string name="label_widget">Widget</string>
+    <string name="indicatorDesc">indicator</string>
+    <string name="mua_caption">Most Used Apps</string>
+    <string name="name_placeholder">App Name</string>
+    <string name="appIconDesc">app icon</string>
+    <string name="allAppCaption">All Apps</string>
 
 </resources>

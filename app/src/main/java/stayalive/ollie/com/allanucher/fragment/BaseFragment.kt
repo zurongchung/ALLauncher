@@ -10,7 +10,6 @@ import android.view.ViewGroup
 
 abstract class BaseFragment : Fragment() {
     protected abstract val logTag: String
-    protected abstract var param1: Int?
     protected abstract fun getLayout(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {

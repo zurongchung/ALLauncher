@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg_cover"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/outmost_indent"
+    android:paddingEnd="@dimen/outmost_indent"
+    android:background="@color/content_bg_dark">
+
+    <!-- indented drawer container -->
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <!-- container for Apps -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/app_lists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="38dp"
+            android:background="@color/content_bg_light"
+            android:padding="@dimen/inner_bound"
+            app:layout_constraintBottom_toTopOf="@id/caption">
+
+            <!-- used for binding data -->
+            <TextView
+                android:id="@+id/categoryCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:text="@string/name_placeholder"
+                android:textColor="@color/cap_font_color_dark"
+                android:textSize="@dimen/text_sm"
+                android:drawableBottom="@drawable/vec_short_line"
+                />
+
+            <LinearLayout
+                android:id="@+id/icon_box"
+                android:layout_width="@dimen/icon_default"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/categoryCaption"
+                >
+
+                <ImageView
+                    android:id="@+id/appIcon"
+                    android:layout_width="@dimen/icon_default"
+                    android:layout_height="@dimen/icon_default"
+                    android:contentDescription="@string/appIconDesc"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/appName"
+                    android:layout_width="@dimen/icon_default"
+                    android:layout_height="@dimen/icon_half"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:singleLine="true"
+                    android:text="@string/name_placeholder"
+                    android:textColor="@color/label_font_color_dark"
+                    android:textSize="@dimen/text_sm" />
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cap_size"
+            android:background="@drawable/sh_light_cap_bottom"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/allAppCaption"
+            android:textSize="@dimen/text_md"
+            android:textColor="@color/cap_font_color_dark"
+            app:layout_constraintBottom_toTopOf="@id/indicator"/>
+
+        <ImageView
+            android:id="@+id/indicator"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:contentDescription="@string/indicatorDesc"
+            android:src="@drawable/vec_triangle_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

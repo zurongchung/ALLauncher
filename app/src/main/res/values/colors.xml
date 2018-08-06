@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/p5</color>
-    <color name="colorPrimaryDark">@color/p10</color>
+    <color name="colorPrimary">@color/base_blue</color>
+    <color name="colorPrimaryDark">@color/darker_blue</color>
     <color name="colorAccent">@color/g50</color>
+
+    <!-- Dark theme -->
+    <color name="cap_bg_dark">#E61B1C20</color>
+    <color name="content_bg_dark">#CC1B1C20</color>
+    <color name="cap_font_color_light">#B9BABE</color>
+    <color name="label_font_color_light">#86878D</color>
+    <!-- Light theme -->
+    <color name="cap_bg_light">#E6ECEEEE</color>
+    <color name="content_bg_light">#CCECEEEE</color>
+    <color name="cap_font_color_dark">#404040</color>
+    <color name="label_font_color_dark">#989898</color>
+    <!-- Blue -->
+    <color name="base_blue">#2070B5</color>
+    <color name="darker_blue">#1C548A</color>
 
     <!-- Purple -->
     <color name="p5">#f3e5f5</color>
